@@ -1,6 +1,5 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import {terser} from 'rollup-plugin-terser';
@@ -60,7 +59,7 @@ function generateConfig(configType, format) {
       'js-sha3',
       'cross-fetch',
       'rpc-websockets',
-      'secp256k1',
+      'ethereum-cryptography/secp256k1-compat',
       'superstruct',
       'tweetnacl',
     ];
@@ -92,7 +91,7 @@ function generateConfig(configType, format) {
             'jayson/lib/client/browser',
             'js-sha3',
             'rpc-websockets',
-            'secp256k1',
+            'ethereum-cryptography/secp256k1-compat',
             'superstruct',
             'tweetnacl',
           ];
@@ -123,10 +122,6 @@ function generateConfig(configType, format) {
         default:
           throw new Error(`Unknown format: ${format}`);
       }
-
-      // TODO: Find a workaround to avoid resolving the following JSON file:
-      // `node_modules/secp256k1/node_modules/elliptic/package.json`
-      config.plugins.push(json());
 
       break;
     case 'node':
